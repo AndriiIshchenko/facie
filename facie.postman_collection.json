@@ -1,0 +1,341 @@
+{
+  "info": {
+    "name": "FACIE - Friends List API",
+    "description": "Complete API collection for FACIE Friends List Service with LLM Integration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Friends Management",
+      "description": "CRUD operations for friends",
+      "item": [
+        {
+          "name": "Create Friend",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "John Doe",
+                  "type": "text"
+                },
+                {
+                  "key": "profession",
+                  "value": "Software Engineer",
+                  "type": "text"
+                },
+                {
+                  "key": "profession_description",
+                  "value": "Develops web applications with Python and React",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/friends",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends"]
+            },
+            "description": "Create a new friend with name, profession, optional description and photo"
+          },
+          "response": [
+            {
+              "name": "201 Created",
+              "status": "Created",
+              "code": 201,
+              "originalRequest": {
+                "method": "POST",
+                "url": "http://localhost:8000/friends"
+              },
+              "responseTime": null,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"profession\": \"Software Engineer\",\n  \"profession_description\": \"Develops web applications\",\n  \"photo_url\": \"/media/abc123.jpg\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "List All Friends",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/friends",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends"]
+            },
+            "description": "Get list of all friends"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"John Doe\",\n    \"profession\": \"Software Engineer\",\n    \"profession_description\": \"Develops web applications\",\n    \"photo_url\": \"/media/abc123.jpg\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Jane Smith\",\n    \"profession\": \"Designer\",\n    \"profession_description\": null,\n    \"photo_url\": \"/media/def456.jpg\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Friend by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/friends/{{friendId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends", "{{friendId}}"]
+            },
+            "description": "Get a specific friend by ID. Set {{friendId}} variable first"
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"profession\": \"Software Engineer\",\n  \"profession_description\": \"Develops web applications\",\n  \"photo_url\": \"/media/abc123.jpg\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Friend",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/friends/{{friendId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends", "{{friendId}}"]
+            },
+            "description": "Delete a friend by ID. Set {{friendId}} variable first"
+          },
+          "response": [
+            {
+              "name": "204 No Content",
+              "status": "No Content",
+              "code": 204,
+              "body": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LLM Features",
+      "description": "AI-powered question answering",
+      "item": [
+        {
+          "name": "Ask Question About Friend",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"question\": \"What technologies does this person specialize in?\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/friends/{{friendId}}/ask",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends", "{{friendId}}", "ask"]
+            },
+            "description": "Ask an AI question about a friend using LLM (Mock or OpenAI). Set {{friendId}} variable first"
+          },
+          "response": [
+            {
+              "name": "200 OK - Mock Provider",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"answer\": \"For more functionality purchase Pro plan\\n\\n💼 Profession: Software Engineer\\n📝 Description: Develops web applications\\n❓ Question: What technologies does this person specialize in?\"\n}"
+            },
+            {
+              "name": "200 OK - OpenAI Provider",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"answer\": \"As a Software Engineer who develops web applications, John likely specializes in technologies such as Python, JavaScript, React, databases (SQL/NoSQL), and web frameworks. His expertise probably includes full-stack development, API design, and modern web architecture patterns.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Health & Monitoring",
+      "description": "System health checks",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Check if API and database are healthy. Returns 200 if healthy, 503 if degraded"
+          },
+          "response": [
+            {
+              "name": "200 Healthy",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"status\": \"healthy\",\n  \"database\": \"connected\",\n  \"media_dir\": \"available\"\n}"
+            },
+            {
+              "name": "503 Degraded",
+              "status": "Service Unavailable",
+              "code": 503,
+              "body": "{\n  \"status\": \"degraded\",\n  \"database\": \"unavailable\",\n  \"error\": \"Cannot connect to database\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Error Cases",
+      "description": "Error scenarios and validation",
+      "item": [
+        {
+          "name": "Create Friend - Missing Name (Error 422)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "profession",
+                  "value": "Engineer",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/friends",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends"]
+            },
+            "description": "Test validation error - missing required field 'name'"
+          },
+          "response": [
+            {
+              "name": "422 Unprocessable Entity",
+              "status": "Unprocessable Entity",
+              "code": 422,
+              "body": "{\n  \"detail\": [\n    {\n      \"type\": \"missing\",\n      \"loc\": [\"body\", \"name\"],\n      \"msg\": \"Field required\",\n      \"input\": {}\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Friend - Not Found (Error 404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/friends/99999",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends", "99999"]
+            },
+            "description": "Test 404 error - friend not found"
+          },
+          "response": [
+            {
+              "name": "404 Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"detail\": \"Friend not found\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Delete Friend - Not Found (Error 404)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/friends/99999",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends", "99999"]
+            },
+            "description": "Test 404 error - trying to delete non-existent friend"
+          },
+          "response": [
+            {
+              "name": "404 Not Found",
+              "status": "Not Found",
+              "code": 404,
+              "body": "{\n  \"detail\": \"Friend not found\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Friend - Invalid Image (Error 400)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "John",
+                  "type": "text"
+                },
+                {
+                  "key": "profession",
+                  "value": "Engineer",
+                  "type": "text"
+                },
+                {
+                  "key": "photo",
+                  "value": "not_an_image.txt",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/friends",
+              "host": ["{{baseUrl}}"],
+              "path": ["friends"]
+            },
+            "description": "Test validation error - invalid image file"
+          },
+          "response": [
+            {
+              "name": "400 Bad Request",
+              "status": "Bad Request",
+              "code": 400,
+              "body": "{\n  \"detail\": \"Invalid image: Not a valid image file\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "friendId",
+      "value": "1",
+      "type": "string"
+    }
+  ]
+}
