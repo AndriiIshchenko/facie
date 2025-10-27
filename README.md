@@ -124,6 +124,7 @@ docker compose logs -f bot
 docker compose down
 ```
 
+![API Example](readme_img/api1.png)
 ---
 
 ## Running Tests
@@ -221,11 +222,11 @@ Use facie.postamn.collection.json for Postman.
 ### Example Usage
 Send request
 
-![Bot Example](readme_img/postman1.png)
+![Postman Example](readme_img/postman1.png)
 
 Response
 
-![Bot Example](readme_img/postman2.png)
+![Postman Example](readme_img/postman2.png)
 
 Check in Telegram
 
